@@ -24,7 +24,7 @@ const getAllProducts = async (req, res) => {
 }
 
 const addProduct = async (req, res) => {
-    const {title,price, description, brand, category} = req.body;
+    const {title,price, description, brand, category, thumb, images} = req.body;
 
 try {
     await connect(process.env.MONGO_URL)
@@ -36,7 +36,7 @@ try {
         })
     }
     else{
-        await Product.create({title,price, description, brand, category})
+        await Product.create({title,price, description, brand, category, thumb, images})
         res.status(201).json({
             message: "Done"
           })
@@ -55,7 +55,7 @@ catch (error) {
 
 const productbyId = async (req, res) => {
 
-    const { _id } = req.query
+    const { _id } = req.params
 
 
     try {
@@ -81,7 +81,7 @@ const productbyId = async (req, res) => {
 
 const productbyBrand = async (req, res) => {
 
-    const { brandname } = req.query
+    const { brandname } = req.params
 
 
     try {
@@ -107,7 +107,7 @@ const productbyBrand = async (req, res) => {
 
 const productbyCategory = async (req, res) => {
 
-    const { catname } = req.query
+    const { catname } = req.params
 
 
     try {
@@ -131,4 +131,66 @@ const productbyCategory = async (req, res) => {
     }
 }
 
-module.exports={getAllProducts, addProduct, productbyBrand, productbyCategory, productbyId}
+//updateproduct
+
+const updateproduct = async (req, res) => {
+
+    const { _id } = req.params
+  
+  
+    try {
+        await connect(process.env.MONGO_URL)
+        const Products = await Product.updateOne({_id : _id}, {
+          $set:{
+            title : req.body.title,
+            price : req.body.price
+          }
+        })
+        res.json(
+            {
+                message : "Product Updated Successfully"
+            }
+        )
+  
+    }
+  
+    catch (error) {
+        res.json(
+            {
+                message: error.message
+            }
+        )
+  
+    }
+  }
+
+
+  //deleteproduct
+
+  const deleteproduct = async (req, res) => {
+
+    const { title } = req.params
+  
+  
+    try {
+        await connect(process.env.MONGO_URL)
+        const Products = await Product.deleteOne({title : title})
+        res.json(
+            {
+                message : "Product Deleted Successfully"
+            }
+        )
+  
+    }
+  
+    catch (error) {
+        res.json(
+            {
+                message: error.message
+            }
+        )
+  
+    }
+  }
+
+module.exports={getAllProducts, addProduct, productbyBrand, productbyCategory, productbyId, updateproduct, deleteproduct}

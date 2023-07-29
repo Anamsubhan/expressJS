@@ -33,6 +33,124 @@ catch (error) {
 }
 
 
+//brandbyname
+
+const brandbyname = async (req, res) => {
+
+    const { brandname } = req.params
 
 
-module.exports={addBrand}
+    try {
+        await connect(process.env.MONGO_URL)
+        const brands = await Brand.findOne({brandname : brandname})
+        res.json(
+            {
+                brands: brands
+            }
+        )
+
+    }
+
+    catch (error) {
+        res.json(
+            {
+                message: error.message
+            }
+        )
+
+    }
+}
+
+//brandbyid
+
+const brandbyid = async (req, res) => {
+
+    const { _id } = req.params
+  
+  
+    try {
+        await connect(process.env.MONGO_URL)
+        const brands = await Brand.findOne({_id : _id})
+        res.json(
+            {
+                brands: brands
+            }
+        )
+  
+    }
+  
+    catch (error) {
+        res.json(
+            {
+                message: error.message
+            }
+        )
+  
+    }
+  }
+
+  //updatebrand
+
+  const updatebrand = async (req, res) => {
+
+    const { _id } = req.params
+  
+  
+    try {
+        await connect(process.env.MONGO_URL)
+        const brands = await Brand.updateOne({_id : _id}, {
+          $set:{
+            brandname : req.body.brandname
+          }
+        })
+        res.json(
+            {
+                message : "Brand Updated Successfully"
+            }
+        )
+  
+    }
+  
+    catch (error) {
+        res.json(
+            {
+                message: error.message
+            }
+        )
+  
+    }
+  }
+
+  //deletebrand
+
+  const deletebrand = async (req, res) => {
+
+    const { brandname } = req.params
+  
+  
+    try {
+        await connect(process.env.MONGO_URL)
+        const brands = await Brand.deleteOne({brandname : brandname})
+        res.json(
+            {
+                message : "Brand Deleted Successfully"
+            }
+        )
+  
+    }
+  
+    catch (error) {
+        res.json(
+            {
+                message: error.message
+            }
+        )
+  
+    }
+  }
+
+
+
+
+
+module.exports={addBrand, brandbyname, brandbyid, updatebrand, deletebrand}

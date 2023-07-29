@@ -3,7 +3,7 @@ const {Schema, model} =require('mongoose')
 const CatSchema = new Schema({
     catname : {
         type : String,
-        required : true
+        required : true,
     }   
 })
 

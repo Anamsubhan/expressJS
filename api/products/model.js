@@ -27,6 +27,16 @@ const ProductSchema = new Schema({
         type : String,
         required :true
     }
+    ,
+    thumb : {
+        type : String,
+        required : true
+    }
+    ,
+    images : {
+        type : Array,
+        required : true
+    }
     
 })
 

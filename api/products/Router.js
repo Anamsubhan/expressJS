@@ -1,6 +1,6 @@
 const app = require('express')
 const router = app.Router()
-const {getAllProducts, addProduct, productbyBrand, productbyCategory, productbyId} = require('./Controller')
+const {getAllProducts, addProduct, productbyBrand, productbyCategory, productbyId, updateproduct, deleteproduct} = require('./Controller')
 //getAllProducts
 router.get('/getallproducts', getAllProducts)
 
@@ -8,15 +8,21 @@ router.get('/getallproducts', getAllProducts)
 router.post('/addproduct', addProduct)
 
 //getproductbyid
-router.get('/productbyid', productbyId)
+router.get('/productbyid/:_id', productbyId)
 
 
 
 //getproductsbybrand
-router.get('/productbybrand', productbyBrand)
+router.get('/productbybrand/:brandname', productbyBrand)
 
 //getproductbycategory
-router.get('/productbycategory', productbyCategory)
+router.get('/productbycategory/:catname', productbyCategory)
+
+router.put('/updateproduct/:_id', updateproduct)
+
+router.delete('/deleteproduct/:title', deleteproduct)
+
+
 
 
 

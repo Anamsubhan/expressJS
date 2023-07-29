@@ -17,6 +17,16 @@ const UserSchema = new Schema({
         unique: true
     }
     ,
+    profilepic : {
+        type : String,
+        required : true
+    }
+    ,
+    role: {
+        type: String,
+        required: true,
+        default: "user"
+    },
     joining : {
         type: Date,
         default : Date.now
