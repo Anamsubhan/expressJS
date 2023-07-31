@@ -32,6 +32,26 @@ catch (error) {
 
 }
 
+//allbrands
+
+const getAllBrands = async (req, res) => {
+    try {
+        await connect(process.env.MONGO_URL)
+        const brands = await Brand.find()
+        res.json(
+            {
+                brands: brands
+            }
+        )}
+
+    catch (error) {
+        res.json(
+            {
+                message: error.message
+            }
+        )}
+}
+
 
 //brandbyname
 
@@ -153,4 +173,4 @@ const brandbyid = async (req, res) => {
 
 
 
-module.exports={addBrand, brandbyname, brandbyid, updatebrand, deletebrand}
+module.exports={addBrand, brandbyname, brandbyid, updatebrand, deletebrand, getAllBrands}

@@ -32,6 +32,26 @@ catch (error) {
 
 }
 
+//allcategories
+
+const getAllCategories = async (req, res) => {
+    try {
+        await connect(process.env.MONGO_URL)
+        const categories = await Category.find()
+        res.json(
+            {
+                categories: categories
+            }
+        )}
+
+    catch (error) {
+        res.json(
+            {
+                message: error.message
+            }
+        )}
+}
+
 
 //catbyname
 
@@ -152,4 +172,4 @@ const categorybyid = async (req, res) => {
 
 
 
-module.exports={addCat, categorybyname, categorybyid, updatecategory, deletecategory}
+module.exports={addCat, categorybyname, categorybyid, updatecategory, deletecategory, getAllCategories}

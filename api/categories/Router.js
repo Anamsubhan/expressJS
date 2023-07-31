@@ -1,10 +1,13 @@
 const app = require('express')
 const router = app.Router()
-const {addCat, categorybyname, categorybyid, updatecategory, deletecategory} = require('./Controller')
+const {addCat, categorybyname, categorybyid, updatecategory, deletecategory, getAllCategories} = require('./Controller')
 
 
 //addBrand
 router.post('/addcat', addCat)
+
+router.get('/getallcategories', getAllCategories)
+
 
 router.get('/categorybyname/:catname', categorybyname)
 

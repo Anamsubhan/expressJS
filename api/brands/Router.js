@@ -1,10 +1,13 @@
 const app = require('express')
 const router = app.Router()
-const {addBrand, brandbyname, brandbyid, updatebrand, deletebrand} = require('./Controller')
+const {addBrand, brandbyname, brandbyid, updatebrand, deletebrand, getAllBrands} = require('./Controller')
 
 
 //addBrand
 router.post('/addbrand', addBrand)
+
+router.get('/getallbrands', getAllBrands)
+
 
 router.get('/brandbyname/:brandname', brandbyname)
 
