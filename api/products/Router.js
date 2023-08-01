@@ -10,8 +10,6 @@ router.post('/addproduct', addProduct)
 //getproductbyid
 router.get('/productbyid/:_id', productbyId)
 
-
-
 //getproductsbybrand
 router.get('/productbybrand/:brandname', productbyBrand)
 
@@ -21,8 +19,6 @@ router.get('/productbycategory/:catname', productbyCategory)
 router.put('/updateproduct/:_id', updateproduct)
 
 router.delete('/deleteproduct/:title', deleteproduct)
-
-
 
 
 

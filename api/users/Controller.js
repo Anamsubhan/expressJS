@@ -7,7 +7,7 @@ const { sign } = require('jsonwebtoken')
 
 
 const signup = async (req, res) => {
-  const {username, password, email, profilepic} = req.body;
+  const {username, password, email} = req.body;
 
   try {
 
@@ -21,7 +21,7 @@ const signup = async (req, res) => {
       })
     }
     else{
-      await User.create({username, email, profilepic, password : await hash(password, 12)})
+      await User.create({username, email, password : await hash(password, 12)})
       res.status(201).json({
         message: "Done"
       })

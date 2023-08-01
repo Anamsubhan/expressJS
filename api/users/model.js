@@ -19,7 +19,7 @@ const UserSchema = new Schema({
     ,
     profilepic : {
         type : String,
-        required : true
+        default : "https://static.vecteezy.com/system/resources/previews/005/544/718/original/profile-icon-design-free-vector.jpg"
     }
     ,
     role: {
