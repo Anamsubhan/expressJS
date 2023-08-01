@@ -4,31 +4,40 @@ const {connect} = require('mongoose')
 
 
 const addCat = async (req, res) => {
-    const {catname} = req.body;
+    const {catname, catImage} = req.body;
 
-try {
-    await connect(process.env.MONGO_URL)
-    const checkExistCat = await Category.exists({catname: catname})
-
-    if(checkExistCat){
-        res.json({
-            message: "Category Already Added"
+    if(!catname || !catImage){
+        res.status(400).json({
+            message : "Missing Required Field"
         })
     }
-    else{
-        await Category.create({catname})
-        res.status(201).json({
-            message: "Done"
-          })
 
-    }   
-} 
-catch (error) {
-    res.status(200).json({
-        message: "Error"
-    })
-    
-}
+    else{
+        try {
+            await connect(process.env.MONGO_URL)
+            const checkExistCat = await Category.exists({catname: catname})
+        
+            if(checkExistCat){
+                res.json({
+                    message: "Category Already Added"
+                })
+            }
+            else{
+                await Category.create({catname, catImage})
+                res.status(201).json({
+                    message: "Done"
+                  })
+        
+            }   
+        } 
+        catch (error) {
+            res.status(200).json({
+                message: "Error"
+            })
+            
+        }
+
+    }
 
 }
 

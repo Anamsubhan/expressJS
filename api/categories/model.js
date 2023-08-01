@@ -5,6 +5,11 @@ const CatSchema = new Schema({
         type : String,
         required : true,
     }   
+    ,
+    catImage : {
+        type : String,
+        required : true
+    }
 })
 
 

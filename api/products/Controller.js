@@ -2,7 +2,7 @@ require('dotenv').config()
 const Brand = require('../brands/model')
 const Category = require('../categories/model')
 const Product = require('./model')
-const {connect} = require('mongoose')
+const { connect } = require('mongoose')
 
 
 const getAllProducts = async (req, res) => {
@@ -13,43 +13,54 @@ const getAllProducts = async (req, res) => {
             {
                 Products: Products
             }
-        )}
+        )
+    }
 
     catch (error) {
         res.json(
             {
                 message: error.message
             }
-        )}
+        )
+    }
 }
 
 const addProduct = async (req, res) => {
-    const {title,price, description, brand, category, thumb, images} = req.body;
+    const { title, price, description, brand, category, thumb, images } = req.body;
 
-try {
-    await connect(process.env.MONGO_URL)
-    const checkExistProd = await Product.exists({title: title})
-
-    if(checkExistProd){
-        res.json({
-            message: "Product Already Added"
+    if (!title || !title || !description || !brand || !category || !thumb || !images) {
+        res.status(400).json({
+            message: "Missing Required Field"
         })
     }
-    else{
-        await Product.create({title,price, description, brand, category, thumb, images})
-        res.status(201).json({
-            message: "Done"
-          })
 
-    }   
-} 
-catch (error) {
-    res.status(200).json({
-        message: "Error"
-    })
-    
-}
+    else {
 
+        try {
+            await connect(process.env.MONGO_URL)
+            const checkExistProd = await Product.exists({ title: title })
+
+            if (checkExistProd) {
+                res.json({
+                    message: "Product Already Added"
+                })
+            }
+            else {
+                await Product.create({ title, price, description, brand, category, thumb, images })
+                res.status(201).json({
+                    message: "Done"
+                })
+
+            }
+        }
+        catch (error) {
+            res.status(200).json({
+                message: "Error"
+            })
+
+        }
+
+    }
 }
 
 
@@ -86,7 +97,7 @@ const productbyBrand = async (req, res) => {
 
     try {
         await connect(process.env.MONGO_URL)
-        const brands = await Brand.findOne({brandname : brandname})
+        const brands = await Brand.findOne({ brandname: brandname })
         res.json(
             {
                 brands: brands
@@ -136,61 +147,61 @@ const productbyCategory = async (req, res) => {
 const updateproduct = async (req, res) => {
 
     const { _id } = req.params
-  
-  
+
+
     try {
         await connect(process.env.MONGO_URL)
-        const Products = await Product.updateOne({_id : _id}, {
-          $set:{
-            title : req.body.title,
-            price : req.body.price
-          }
+        const Products = await Product.updateOne({ _id: _id }, {
+            $set: {
+                title: req.body.title,
+                price: req.body.price
+            }
         })
         res.json(
             {
-                message : "Product Updated Successfully"
+                message: "Product Updated Successfully"
             }
         )
-  
+
     }
-  
+
     catch (error) {
         res.json(
             {
                 message: error.message
             }
         )
-  
+
     }
-  }
+}
 
 
-  //deleteproduct
+//deleteproduct
 
-  const deleteproduct = async (req, res) => {
+const deleteproduct = async (req, res) => {
 
     const { title } = req.params
-  
-  
+
+
     try {
         await connect(process.env.MONGO_URL)
-        const Products = await Product.deleteOne({title : title})
+        const Products = await Product.deleteOne({ title: title })
         res.json(
             {
-                message : "Product Deleted Successfully"
+                message: "Product Deleted Successfully"
             }
         )
-  
+
     }
-  
+
     catch (error) {
         res.json(
             {
                 message: error.message
             }
         )
-  
-    }
-  }
 
-module.exports={getAllProducts, addProduct, productbyBrand, productbyCategory, productbyId, updateproduct, deleteproduct}
+    }
+}
+
+module.exports = { getAllProducts, addProduct, productbyBrand, productbyCategory, productbyId, updateproduct, deleteproduct }

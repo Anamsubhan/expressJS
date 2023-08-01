@@ -5,6 +5,11 @@ const BrandSchema = new Schema({
         type : String,
         required : true
     }   
+    ,
+    brandImage : {
+        type : String,
+        required : true
+    }
 })
 
 

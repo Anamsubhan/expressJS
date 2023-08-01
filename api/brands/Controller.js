@@ -4,31 +4,42 @@ const {connect} = require('mongoose')
 
 
 const addBrand = async (req, res) => {
-    const {brandname} = req.body;
+    const {brandname, brandImage} = req.body;
 
-try {
-    await connect(process.env.MONGO_URL)
-    const checkExistBrand = await Brand.exists({brandname: brandname})
-
-    if(checkExistBrand){
-        res.json({
-            message: "Brand Already Added"
+    if(!brandname || !brandImage){
+        res.status(400).json({
+            message : "Missing Required Field"
         })
     }
-    else{
-        await Brand.create({brandname})
-        res.status(201).json({
-            message: "Done"
-          })
 
-    }   
-} 
-catch (error) {
-    res.status(200).json({
-        message: "Error"
-    })
-    
-}
+    else{
+        try {
+            await connect(process.env.MONGO_URL)
+            const checkExistBrand = await Brand.exists({brandname: brandname})
+        
+            if(checkExistBrand){
+                res.json({
+                    message: "Brand Already Added"
+                })
+            }
+            else{
+                await Brand.create({brandname, brandImage})
+                res.status(201).json({
+                    message: "Done"
+                  })
+        
+            }   
+        } 
+        catch (error) {
+            res.status(200).json({
+                message: "Error"
+            })
+            
+        }
+
+    }
+
+
 
 }
 
