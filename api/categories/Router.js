@@ -3,7 +3,7 @@ const router = app.Router()
 const {addCat, categorybyname, categorybyid, updatecategory, deletecategory, getAllCategories} = require('./Controller')
 
 
-//addBrand
+//addCat
 router.post('/addcat', addCat)
 
 router.get('/getallcategories', getAllCategories)
